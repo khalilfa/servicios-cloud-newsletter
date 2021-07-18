@@ -42,3 +42,6 @@ dist/**/*
 yarn.lock
 
 data.json
+
+credentials.json
+token.json

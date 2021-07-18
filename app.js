@@ -42,7 +42,6 @@ app.use((err, req, res, next) => {
   } else if(err instanceof BadParamError || err instanceof SyntaxError) {
     res.status(400).json({ status: 400, errorCode: "BAD_REQUEST" });
   } else if(err) {
-    console.error('--- ERRRORRR PAPAPAA ', err);
     res.status(500).json({ status: 500, errorCode: "INTERNAL_SERVER_ERROR" });
   }
   
