@@ -1,0 +1,23 @@
+{
+  "name": "newsletter_service",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "type": "module",
+  "dependencies": {
+    "axios": "^0.21.1",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "morgan": "^1.10.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.7"
+  },
+  "scripts": {
+    "test": "test",
+    "start": "node app.js",
+    "dev": "nodemon --es-module-specifier-resolution=node app.js"
+  },
+  "author": "",
+  "license": "ISC"
+}
