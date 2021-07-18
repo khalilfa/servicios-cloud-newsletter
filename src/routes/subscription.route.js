@@ -2,7 +2,7 @@ import express from "express";
 
 import BadParamError from "../exceptions/badParamError";
 import EntityNotFoundError from "../exceptions/entityNoyFoundError";
-import { addSubscription, existArtist, notifyUsers, removeSubscription } from "../services/subscription.service";
+import { addSubscription, allSubscriptionsFor, deleteSubscriptions, existArtist, notifyUsers, removeSubscription } from "../services/subscription.service";
 import { existParams } from "../utils/utils";
 
 export const subscriptionRouter = express.Router();
@@ -59,6 +59,42 @@ subscriptionRouter.post('/notify', async (req, res, next) => {
     if(!exist) throw new EntityNotFoundError('Artist', artistId);
 
     notifyUsers(artistId, subject, message, req.app.locals.subscriptions);
+
+    res.status(200).json({});
+    next();
+  } catch(err) { next(err) }
+});
+
+// All subscribed users
+subscriptionRouter.get('/subscriptions/:artistId', async (req, res, next) => {
+  try{
+    const validParams = ['artistId'];
+    if(!existParams(validParams, req.params)) throw new BadParamError(validParams);
+
+    const artistId = req.params.artistId;
+
+    const exist = await existArtist(artistId);
+    if(!exist) throw new EntityNotFoundError('Artist', artistId);
+
+    const subscriptions = allSubscriptionsFor(artistId, req.app.locals.subscriptions);
+
+    res.status(200).json({ artistId, subscriptors: subscriptions });
+    next();
+  } catch(err) { next(err) }
+});
+
+// All subscribed users
+subscriptionRouter.delete('/subscriptions', async (req, res, next) => {
+  try{
+    const validParams = ['artistId'];
+    if(!existParams(validParams, req.body)) throw new BadParamError(validParams);
+
+    const artistId = req.body.artistId;
+
+    const exist = await existArtist(artistId);
+    if(!exist) throw new EntityNotFoundError('Artist', artistId);
+
+    req.app.locals.subscriptions = deleteSubscriptions(artistId, req.app.locals.subscriptions);
 
     res.status(200).json({});
     next();

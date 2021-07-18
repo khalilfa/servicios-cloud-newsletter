@@ -65,3 +65,15 @@ export async function notifyUsers(artistId, subject, message, subscriptions) {
     throw new Error('Fallo el envio de notificacion via email');
   }
 }
+
+export function allSubscriptionsFor(artistId, subscriptions) {
+  const subs = subscriptions.find(sub => sub.artist === artistId);
+
+  return (subs ? subs.subscriptions : []);
+}
+
+export function deleteSubscriptions(artistId, subscriptions) {
+  const newSubscriptions = subscriptions.filter(sub => sub.artist !== artistId);
+
+  return newSubscriptions;
+}
