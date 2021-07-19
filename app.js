@@ -8,7 +8,7 @@ import EntityNotFoundError from "./src/exceptions/entityNoyFoundError";
 import BadParamError from "./src/exceptions/badParamError";
 
 // App Variables
-const PORT = config.PORT || 5000;
+const PORT = config.PORT || 5001;
 const app = express();
 
 // Set state
