@@ -68,6 +68,7 @@ subscriptionRouter.post('/notify', async (req, res, next) => {
 // All subscribed users
 subscriptionRouter.get('/subscriptions/:artistId', async (req, res, next) => {
   try{
+    console.log('Entra aca');
     const validParams = ['artistId'];
     if(!existParams(validParams, req.params)) throw new BadParamError(validParams);
 
@@ -78,12 +79,13 @@ subscriptionRouter.get('/subscriptions/:artistId', async (req, res, next) => {
 
     const subscriptions = allSubscriptionsFor(artistId, req.app.locals.subscriptions);
 
+    console.log('Llega antes del status 200');
     res.status(200).json({ artistId, subscriptors: subscriptions });
     next();
   } catch(err) { next(err) }
 });
 
-// All subscribed users
+// Delete all subscribed users
 subscriptionRouter.delete('/subscriptions', async (req, res, next) => {
   try{
     const validParams = ['artistId'];
@@ -96,6 +98,14 @@ subscriptionRouter.delete('/subscriptions', async (req, res, next) => {
 
     req.app.locals.subscriptions = deleteSubscriptions(artistId, req.app.locals.subscriptions);
 
+    res.status(200).json({});
+    next();
+  } catch(err) { next(err) }
+});
+
+// Ping
+subscriptionRouter.delete('/ping', async (req, res, next) => {
+  try{
     res.status(200).json({});
     next();
   } catch(err) { next(err) }
