@@ -104,7 +104,7 @@ subscriptionRouter.delete('/subscriptions', async (req, res, next) => {
 });
 
 // Ping
-subscriptionRouter.delete('/ping', async (req, res, next) => {
+subscriptionRouter.get('/ping', async (req, res, next) => {
   try{
     res.status(200).json({});
     next();
